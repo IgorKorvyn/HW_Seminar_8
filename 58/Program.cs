@@ -1,68 +1,49 @@
-﻿/* Задача 56: Задайте прямоугольный двумерный массив. 
-Напишите программу, которая будет находить строку с наименьшей суммой элементов. */
+﻿/* Задача 58: Задайте две матрицы. Напишите программу, которая будет находить произведение двух матриц.
+Например, даны 2 матрицы:
+2 4 | 3 4
+3 2 | 3 3
+Результирующая матрица будет:
+18 20
+15 18 */
 
-Console.Clear();
-Console.WriteLine($"Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.");
-Console.WriteLine($"\nВведите размер массива m x n и диапазон случайных значений:");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-int range = InputNumbers("Введите диапазон: от 1 до ");
-
-int[,] matrix = new int[m, n];
-CreateArray(matrix);
-WriteArray(matrix);
-
-int minSumLine = 0;
-int sumLine = SumLineElements(matrix, 0);
-for (int i = 1; i < matrix.GetLength(0); i++)
-{
-    int tempSumLine = SumLineElements(matrix, i);
-    if (sumLine > tempSumLine)
-    {
-        sumLine = tempSumLine;
-        minSumLine = i;
-    }
-}
-
-Console.WriteLine($"\n{minSumLine + 1} - строкa с наименьшей суммой ({sumLine}) элементов ");
-
-
-int SumLineElements(int[,] matrix, int i)
-{
-    int sumLine = matrix[i, 0];
-    for (int j = 1; j < matrix.GetLength(1); j++)
-    {
-        sumLine += matrix[i, j];
-    }
-    return sumLine;
-}
-
-int InputNumbers(string input)
-{
-    Console.Write(input);
-    int output = Convert.ToInt32(Console.ReadLine());
-    return output;
-}
-
-void CreateArray(int[,] matrix)
+void InputMatrix(int[,] matrix)
 {
     for (int i = 0; i < matrix.GetLength(0); i++)
     {
         for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            matrix[i, j] = new Random().Next(range);
-        }
-    }
-}
-
-void WriteArray(int[,] matrix)
-{
-    for (int i = 0; i < matrix.GetLength(0); i++)
-    {
-        for (int j = 0; j < matrix.GetLength(1); j++)
-        {
-            Console.Write(matrix[i, j] + " ");
+            matrix[i, j] = new Random().Next(0, 11);
+            Console.Write(matrix[i, j] + " \t");
         }
         Console.WriteLine();
     }
 }
+void ReleaseMatrix(int[,] MatrixOne, int[,] MatrixTwo)
+{
+    Console.WriteLine();
+    int[,] ResultMatrix = new int[MatrixOne.GetLength(0), MatrixOne.GetLength(1)];
+    for (int i = 0; i < MatrixOne.GetLength(0); i++)
+    {
+        for (int j = 0; j < MatrixOne.GetLength(0); j++)
+        {
+            ResultMatrix[i, j] = MatrixOne[i, j] * MatrixTwo[i, j];
+            Console.Write(ResultMatrix[i, j] + " \t");
+        }
+        Console.WriteLine();
+    }
+}
+
+Console.Clear();
+Console.Write("Введите кол-во строк: ");
+int n = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите кол-во столбцов: ");
+int m = Convert.ToInt32(Console.ReadLine());
+int[,] MatrixOne = new int[n, m];
+int[,] MatrixTwo = new int[n, m];
+Console.WriteLine($"Начальные массивы: ");
+InputMatrix(MatrixOne);
+Console.WriteLine();
+InputMatrix(MatrixTwo);
+
+Console.WriteLine($"Конечный массив: ");
+ReleaseMatrix(MatrixOne, MatrixTwo);
